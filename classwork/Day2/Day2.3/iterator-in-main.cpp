@@ -1,12 +1,3 @@
- ### MCQ
- 1.  find duplicate element of array
- 2. find maximum element of array
-
-## Interview Question 
-3. How to traverse Linked List in outside of class or non member function ?
-* create iterator class
-!['iterator'](Iterator.png)
-```cpp
 #include<iostream>
 #include<string>
 using namespace std;
@@ -143,42 +134,3 @@ int main( void )
 	cout<<endl; 
 	return 0;
 }
-
-```
-
-4. How to reverse a linked list? 
-* using recursion 
-* using 3  pointers
-!['day2'](ReverseLinkedList.png) 
-
-```cpp
- void reverse(void) throw(Exception)
-        {
-            if(this->empty())
-            throw Exception("LinkedList is empty");
-           
-           Node *trav = this->head; 
-
-           Node* current;
-           Node* previous = NULL;  
-           while(trav != NULL)
-           {  current = trav; 
-               trav = trav->next; 
-                current->next = previous; 
-                 previous = current; 
-            
-           }
-
-           this->tail = this->head; 
-           this->head = previous; 
-
-        }
-
-```
-
-5. Add node before
-![day2](AddNodeBefore.png)
-
-1.  Delete,node whose address is given, with a node after it  
-!['day2'](DeletionOfNode.png)
-
