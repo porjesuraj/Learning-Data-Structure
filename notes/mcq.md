@@ -1,4 +1,7 @@
  ### MCQ
+ 0. * trick to remember precedence table : 
+ + PUMA S REBL TACO 
+
  1.  find duplicate element of array
  2. find maximum element of array
 
@@ -179,6 +182,62 @@ int main( void )
 5. Add node before
 ![day2](AddNodeBefore.png)
 
-1.  Delete,node whose address is given, with a node after it  
+6.  Delete,node whose address is given, with a node after it  
 !['day2'](DeletionOfNode.png)
 
+7. How to create Heterogeneous Linked List 
+* upcasting , dynamic cast, inheritence 
+
+8.  Application of stack 
++  For parenthesis balancing .  
++ to implement undo and redo function 
+
+9. Evaluate infix to  prefix and postfix, so number of time push and pop takes place
+
+10. integer conversion to binery equivalent
+11. how to balance parantesis
+ * 1. String of parenthesis is given for example “((())) “ or ({}) etc. and we need to find out if they are balanced. Means, if there are matching pairs or not.
+ * 2. for example, ({}) is balanced parentheses and ((((()) is not a balanced parenthesis.
+ * 3. Algorithm:
+  + 1. Traverse the expression string
+  + 2. If the current character is a opening bracket or parenthesis e.g. ‘(‘ or ‘{‘ or ‘[‘  then push in the stack.
+  + 3. If the current character is a closing bracket e.g ‘)’ or ‘}’ or ‘]’ then  pop a character from  the stack and check if it is a corresponding parenthesis, if matched then pop it from stack.
+  + 4. Once, string traversal is complete then check if stack is empty or not. If the stack is empty parenthesis are balanced.
+ 
+* 4. Time Complexity: O(n) – traverse string of n length.
+* 5. Space complexity O(n) – Due to Stack
+
+ 12.  string reverse logic 
+
+ ```cpp
+ void strrev(char str[])
+{
+    int frontIndex = 0;
+    int backIndex = strlen(str) - 1; 
+
+while(frontIndex < backIndex)
+    swap(str[frontIndex++],str[backIndex--]);
+}
+
+ ```
+
+13. program from decimal to binary 
+
+```cpp
+#include<iostream>
+using namespace std; 
+int main ()
+{
+    int num, bin;
+    cout << "Enter the number : ";
+    cin >> num;
+    cout << "The binary equivalent of " << num << " is ";
+    while (num > 0)
+    {
+        bin = num % 2;
+        cout << bin;
+        num /= 2;
+    }
+    return 0;
+}
+```

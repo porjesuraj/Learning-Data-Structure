@@ -81,7 +81,7 @@
 
 2. Vector
 
-### 3. Linked List : data structure
+# 3. Linked List : data structure
  + linked list is a linear data strucure,which is collection of elements
    + where each element is called a node
 * 1. Node 
@@ -865,4 +865,277 @@ int nodeCount() const throw()
 
 ## Limitation for Linear D-LL
 * cant travel from one node to prev nodes, directly 
-* 
+
+# day3
+
+## to do 
+1. Complexity 
+2. Stack stl 
+3. Evaluate infix to  prefix and postfix, so number of time push and pop takes place
+4.  integer conversion to binery equivalent
+```cpp
+#include<iostream>
+using namespace std; 
+int main ()
+{
+    int num, bin;
+    cout << "Enter the number : ";
+    cin >> num;
+    cout << "The binary equivalent of " << num << " is ";
+    while (num > 0)
+    {
+        bin = num % 2;
+        cout << bin;
+        num /= 2;
+    }
+    return 0;
+}
+```
+5.  how to balance parantesis
+* 1. String of parenthesis is given for example “((())) “ or ({}) etc. and we need to find out if they are balanced. Means, if there are matching pairs or not.
+* 2. for example, ({}) is balanced parentheses and ((((()) is not a balanced parenthesis.
+* 3. Algorithm:
+  + 1. Traverse the expression string
+  + 2. If the current character is a opening bracket or parenthesis e.g. ‘(‘ or ‘{‘ or ‘[‘  then push in the stack.
+  + 3. If the current character is a closing bracket e.g ‘)’ or ‘}’ or ‘]’ then  pop a character from  the stack and check if it is a corresponding parenthesis, if matched then pop it from stack.
+  + 4. Once, string traversal is complete then check if stack is empty or not. If the stack is empty parenthesis are balanced.
+ 
+* 4. Time Complexity: O(n) – traverse string of n length.
+* 5. Space complexity O(n) – Due to Stack
+
+ 
+
+
+
+
+## notes
+* Data Structure describe two things : 
+1. How to organize data inside RAM(memory representation)
+2. Which Operations are required to organize data inside RAM(opearations)
+
+### Stack 
+!['day3'](day3_stack.png)
+1. A stack is linear/sequential Data  Structure in which we can manage elements in 
+   + Last In First Out order(LIFO)
+2. we can implement Stack using : 
++ 1. Array 
++ 2. LinkedList
+  * addFirst (push)
+  * removeFirst(pop)
+  * getFirst("peek")
++ 3. Deque("Deck)  
+  * peekFront (peek)
+  * enqueFront (push)
+  * dequeFront (pop)
+
+3. Stack DS  
+!['day3-S-A'](Image_3.1.png)
+*  1.  top is index varaible  for a stack
++ its value by default by -1 
+*  2. to insert element , 
++ need to increment top 
+*  3.  so stack will be empty when 
++ top = -1
+*  4. stack will be full 
++  when top = SIZE - 1
++ where Size = size of stack (from 0 to size -1)
+*  5. 
+
+4. we can perform following operation on Stack
++ 1. empty
+   * If value of top is -1 then stack is considered as empty
+   * Syntax : 
+   > bool empty(void) const throw(); 
++ 2. full 
+   * if value of top is "array size - 1" then stack is considered as full 
+   * Syntax: 
+   > bool full(void ) const throw ()
++ 3. push 
+  * if we want to insert new element inside stack then we should push function 
+  * FIrst Increment top and then insert new element
+  * Syntax: 
+  > void push (int element) throw(Exception)      
++ 4. peek
+   * if we want to get values from stack top (where top is pointing ) then we should use peek function
+   * it is inspector/selector/getter function which do not modify state  of Stack
+   * Syntax: 
+   > int peek(void) throw(Exception) 
++ 5. pop  
+  * if we want to remove element from stack, then we should use pop function 
+  * Remove element and decrement top.
+  * Syntax : 
+  > void pop (void) throw(Exception)
+
+
+5. Application of stack 
+* programatic example
+1. To maintain function activation record 
+2. Expression conversion and their eveluation 
+  + Infix to prefix
+  + Infix to postfix
+3. for the implementation of Depth First Traversal/ Search (DFS) algorithm 
+4. For parenthesis balancing 
+5. To convert integer into binary format   
+6. to reverse string 
+
+7. to implement undo and redo function
+8. to show call history in call logs
+9. to list email and sms 
+10. Recent files function 
+
+## . Expression
+1. A statement which contians variable .constant and operator is called Expression
+2. Forms of Expression 
++ 1. Infix E
+   * operator in between operand
+   * Example  : a + b 
++ 2.  Prefix E 
+  * Operator is before operand 
+  * Example : + a b
++ 3.  Postfix E 
+  * Operator is after operand 
+  * Example : a b +
+
+* compiler uses any one form of expression , as it cant understand expression in general 
+* trick to remember precedence table : 
++ PUMA S REBL TACO 
+3. Expression 
+* INFIX TO PREFIX 
+!['day3'](Image_3.3.png)
+ 1. INFIX TO PREFIX 
+ *  to convert  Infix to prefix: a + b * c - d / e
+ - 1.  consider precidence of operator BODMAS|(bracket of Div mult add sub) 
+ - so expression 
+  + a + *bc - d/e 
+  + a + *bc - /de
+  +    +a*bc -/de
+  +    -+a*bc/de
+
+ *  Infix to prefix
++ COnsider  infix Expression: "5 + 3 * 9 / (7 -4) - 6 * 2"
++   prefix :  -+5/*39-74*62
+
+2.  INFIX TO POSTFIX 
+!['day3'](Image_3.4.png)
+*  to convert Infix : a + b *c -d /e
++ to Postfix 
++ =>    a + bc* -d/e
++ => a + bc* - de/
++ => abc*+ -de/
++ => abc*+de/- 
+
+* so for expression 
+```cpp
+ infix => 5+ 3 * 9 / (7-4) - 6 * 2 
+
+post fix =>   5 + 3 * 9 / 74- - 6 * 2
+        => 5 + 39* / 74-  - 6 *2
+        =>  5 + 39*74-/ - 62*
+        =>  539*74-/+ - 62* 
+        =>   539*74-/+62*-
+
+
+```
+
+
+# 3.  Queue 
+!['day3']()
+!['day3'](day3_Queue.png)
+
+1. A Queue is linear/sequntial data structure in which we can manage element in First In First Out (FIFO) order.
+*  A good example of a queue is any queue of consumers for a resource where the consumer that came first is served first. The difference between stacks and queues is in removing.
+*   In a stack we remove the item the most recently added; in a queue, we remove the item the least recently added.
+2. We can perform following operations on queue: 
+-  
+1. empty
+2. full 
+3. enqueue 
+4. dequeue 
+5. peek 
+
+3. Types of Queue 
++ 
+1. Linear Q
+2. Circular Q
+3. Priority Q 
+4. Deque
+
+## Linear Queue 
+* we can iimplement linear queue using array as well as LinkedList. 
+
+* 1.  Linked List implementation using (Linear Singly Linked list)
++ 1. addlast()
++ 2. removeFirst()
+
+
+* 2.  **Array implementation**
+1. empty
++ if value of rear is -1, or value of front is greater than read than linear Q is considered as empty
++ syntax: bool empty(void) const throw(); 
+2. full
++ if value of read is "Array size - 1  " then linear queue is considered as full
++ snytax: bool full(void)
+3. enqueue 
++ use to insert element in queue
++ increment rear and insert value
++ syntax : void enqueue(int element) throw(Exception); 
+4. dequeue
++  it is used to remove element from queue 
++  Syntax : void dequeue (void) throw (Exception)
+5. peek
++ used to get value from front end . 
++ Syntax  : int peek(void) const throw(Exception)
+
+### Limitation 
+* after deletion of elements from queue, even though it is empty, we cannot use that space. so to overcome this   
+## Circular Queue
+1. if we want to overcome limitation of linear queue then we should use C-Queue 
+
+* we can iimplement linear queue using array as well as LinkedList. 
+
+* 1.  Linked List implementation using (Circular Singly Linked list)
++ 1. addlast()
++ 2. removeFirst()
+
+
+* 2.  **Array implementation**
+1. empty
++ if value of rear is -1, than read than C Q is considered as empty
++ syntax: bool empty(void) const throw(); 
+1. full
++ if value of  
+>  (rear + 1) % size == front
++ then C queue is considered as full
++ snytax: bool full(void)
+3. enqueue 
++ use to insert element in queue
++ increment rear and insert value
++ syntax : void enqueue(int element) throw(Exception); 
+4. dequeue
++  it is used to remove element from queue
++  increment front by 1;  
++  Syntax : void dequeue (void) throw (Exception)
+5. peek
++ used to get value from front end . 
++ Syntax  : int peek(void) const throw(Exception)
+
+## Priority Queue 
+
+
+## Deque(Double ended Queue)
+1. to implement using array
++ 1. enqueueFront() : 
+> rear = (rear + 1) % size
++ 2. enqueueBack()  : 
+> >  front = (front - 1 + this->size) % size
+
++  3.  dequeueFront() :
+  >  front = (front + 1) % size
++ 4.  dequeueBack()  :
+> rear = (rear - 1 + this->size) % size
++ 5.  peekFront() : 
+> use front
++ 6.  peekBack() :
+>  use rear
+
+
