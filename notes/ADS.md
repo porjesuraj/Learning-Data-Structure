@@ -1072,6 +1072,7 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 1. empty
 + if value of rear is -1, or value of front is greater than read than linear Q is considered as empty
 + syntax: bool empty(void) const throw(); 
+
 2. full
 + if value of read is "Array size - 1  " then linear queue is considered as full
 + snytax: bool full(void)
@@ -1138,4 +1139,360 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 + 6.  peekBack() :
 >  use rear
 
+
+# day4
+
+0. Linked List is sequential data structure ,which is collection of nodes
+## Tree 
+1. Tree is non sequential , non linear data structure which is collection of nodes
+2. Tree contains: 
+   1. A special node is caleed root
+   2. zero or more sub trees 
+3. A tree data structure can be defined recursively as a collection of nodes (starting at a root node),
++  where each node is a data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints that no reference is duplicated, and none points to the root.
+
+4. In Image "Tree_1.pdf" A is root node which has 3 sub trees (B,C,D)
+5. If we want to store data in hierarchical order then we should use tree.
++ it help us to search data easily 
+!['day4-tree_1'](day4.1.png)
+
+### Basic Tree Terms
+1. Root 
+ + it is a special node in a tree, through which we can traverse entire tree. 
+ + In Image "Tree_1.pdf" , Node A is a root node. 
+ + Root node do not have parent node. 
+
+2. Parent Node
+ + An Immediate predecessor of any node, is called parent node . 
+3. Child Node
+ + An immediate successor of any node, is called child node
+ + eg: 
+ ```
+ child : parent node 
+ node/
+siblings
+ B,C,D : A
+
+ E,F : B
+
+ G : C 
+
+ K,L : F
+ M : H
+ N,O : M 
+```
+
+4. Siblings 
+ + Nodes with same parent are siblings 
+
+5. Edge
+ + Link between two nodes is called edge
+
+6. Path 
+ + Number of Successive edges from source node to destination node, is called path. 
+ +  path is  the sequence of nodes along the edges of a tree
+ + Path between A to N is, A -D, D-H,H-M-M-N
+
+7. Degree of node
+ + no of child node of a parent node represent degree of a node. 
+ 
+ ```
+ Node                Degree of a node 
+ - E,K,L,G,N,O,I,J : 0 (leaf node / external node )
+ - C,H :           : 1  } (rest are internal node)
+ - B,F,M           : 2  }
+ - A,D             : 3  } 
+ ```
+8. Leaf Node/ terminal node 
+ + a node whose degree is zero is called leaf node / external node 
+ >  - E,K,L,G,N,O,I,J : 0 (leaf node / external node )
+ + rest are internal node
+9. Level of Node
++ A level of a  node in a tree is defined as 
+  1. Level of root node is 0
+  2. Level of any other node in a  tree is one more than level of its parent 
+
+```
+NODE           LEVEL 
+A             | 0 
+B,C,D         | 1
+E,F,G,H,I,J   | 2
+K,L,M         | 3
+N,O           | 4   
+
+```
+10. Depth 
+ + maximum level of anynode in a tree is called as depth of a tree
+ + Maximum depth of a tree mentioned in diagram is 4 . 
+  
+11. Internal Node/branch node 
+ + An internal node (also known as an inner node, inode for short, or branch node) is any node of a tree that has child nodes.
+
+12. Tree Ancestor
+ 
+ + starting from root , till specific node ,
++ All the predecessors in the path from source/root node to destination node are called as Ancestor
+
+ ```
+ Node           | Ancestor
+ B,C,D          | A
+E,F,            | B,A
+G,              | C,A
+H,I,J           | D,A
+K,L             | F,B,A
+M               | H,D,A 
+N,O             | M,H,D,A
+
+
+ ```
+
+1.  Tree Descendant 
++ All the nodes which are reachable from specified node are its Descendant. 
+```
+ Node              | DESCENDENT                
+ - E,K,L,G,N,O,I,J |  No descendent 
+ - F               |  K,L 
+ - C               | G  
+ - M               | N.O
+ - B               | E,F,K,L 
+ - H               | M,N,O
+ - D               | H,I,J,M,N,O
+ - A               | ALL NODES
+
+```
+14. Height of Node 
++ The height of a node is the length of the longest downward path to a leaf from that node. 
++ The height of the root is the height of the tree. 
+```
+ Node              | Height  (H)             
+ - E,K,L,G,N,O,I,J | leaf node(H = 0)
+ - F               | 1  
+ - C               | 1   
+ - M               | 1 
+ - B               | 2 
+ - H               | 2 
+ - D               | 3 
+ - A               | 4
+
+```
+
+15. height of Tree 
+ + Height of root Node is considered as height of tree
+ +  in diagram, heihgt of tree is 4.  
+
+
+### Types of Tree
+1. Type of tree
+   1. General Tree 
+   2. Binary Tree
+   3. Null Tree  
+!['day4_tree_2.pdf'](day4.2.png)
+2. General Tree
++ in a tree if there is no restriction on number of sub trees then it is called general tree
++ Consider Image from "Tree_2.pdf" 
+
+3. Binary Tree
++ In a Tree , if node can have at most 2 sub trees then it is called binary tree. 
+
+4. NULL Tree
++  If a tree do not contain any node then such tree is called null tree   
+
+
+
+### Types of Binary Tree
+
+1. Full Binary Tree
+2. Complete Binary Tree
+3. Skewed Binary Tree
+  + Left Skewed Binary Tree
+  + Right Skewed Binary Tree
+4. Strictly Binary Tree  
+
+
+####  explanations 
+
+5. Full Binary Tree
++ it is a tournament tree  
++  A binary tree is said to be full binary tree if each node has 2 child node . 
++   In full binary tree : 
+  1. Every non leaf node must have , non empty left sub tree and 
+    and non empty right sub tree
+  2. All the leaf nodes must exist at same level . 
+!['f-b-t'](day4.3.png)
+6. Complete Binary tree 
+ + in complete binary tree: 
+  1. every level must be filled from left to right
+  2. Leaf node can exist at level n or n-1
+  + where n : is leaf node level possibilities 
+ + every full binary tree is a complete binary tree, 
+ + but every complete binary tree is not full binary tree 
+!['c-b-t](day4.4.png)
+
+7. Skewed Binary Tree
+ + In a binary Tree, either all the left sub trees or right sub trees are empty, then such binary tree is called Skewed Binary tree. 
+ 1. Left Skewed Binary Tree 
+ + In a binary tree, if, right sub tree of each node is empty then it is Left Skewed binary tree
+ 2.  Right Skewed Binary Tree 
+ + In a binary tree, if, left sub tree of each node is empty then it is Left Skewed binary tree
+
+ !['s-b-t'](day4.5.png)
+
+
+8. Strictly Binary Tree
+ + In strictly binary tree : 
+   1. Every non leaf node, must have, non empty left sub tree and non empty right sub tree 
+   2. Leaf Node can exist at any level . 
+ + Every full binary tree is strictly binary tree, but every strictly binary tree is not full binary tree 
+!['s-b-t'](day4.6.png)
+
+### Tree Trqaversal Techniques
+
+1. Depth First Search (DFS) Traversal (stack)
++ implicitely uses **Stack** 
+  1. PreOrder    Traversal (V-L-R)
+  2. InOrder Traversal  (L-V-R)
+  3. PostOrder Traversal (L-R-V)
+!['t-t'](day4.7.png)
+2. Breadth First Search (BFS) Traversal  (queue)
++ implicitely uses **Queue** 
+  4. Level Order Traversal (level by level)
+
+#### Explanation 
+
+1. PreOrder Traversal 
++ Algorithm is : 
+  1. Visit parent node (V)
+  2. Visit Left Sub Tree (L)
+  3. Visit Right Sub Tree(R)
++ Preorder Traversal : V-L-R
+!['tree_7'](day4.8.png)
+* SOLVE
+```
+1. TO SOLVE 
+A --> B,C 
+B---> D,F
+C---> F,G 
+
+- A + P[B] + P[C]
+- A + [B + P[D] ] + [C + P[E] + P[F]]
+- A + [B + D + P[G] + P[H]] + [C + E + F]
+- A + [B + D + G + H] + C + E + F] 
+ : PREORDER T: --> ABDGHCEF 
+
+```
+2. InOrder Traversal
+
++ Algorithm is : 
+ 
+  1. Visit Left Sub Tree (L)
+   2. Visit parent node (V)
+  3. Visit Right Sub Tree(R)
++ Inorder Traversal : L-V-R
+!['TREE_9'](day4.9.png)
+* SOLVE
+```
+1. TO SOLVE 
+A --> B,C 
+B---> D,F
+C---> F,G 
+
+InOrder = I 
+
+- I[B] + A + I[C]
+ 
+ - [ I[D] + B + I[E]] + a + [I[F] + C + I[G]]
+ -[ D,B, E, A F,C,G ]
+ 
+ QUESTION TO SOLVE 
+
+ - 
+ -
+
+```
+
+3. PostOrder Traversal
+
++ Algorithm is : 
+  
+  1. Visit Left Sub Tree (L)
+  2. Visit Right Sub Tree(R)
+  3. Visit parent node (V)
++ Postorder Traversal : L-R-V
+* SOLVE
+!['p-t'](day4.10.png)
+```
+PostOrder : P 
+1. TO SOLVE 
+A --> B,C 
+B---> D,F
+C---> F,G 
+LRV
+-  P[B] + P[C] + A 
+
+- P[D] + P[E] + B] + [P[F] + P[G] + C]  + A 
+- [D + E + B ] + [F + G + C] + A 
+- d,E,B,F,G,C,A 
+
+2. TO SOLVE
+
+- P[B] + P[C]  + A
+- [P[D] + B] +  [P[E] + P[F] + c ] + A
+- [ P[G] + P[H] + D ] + [ [E] + [F] + C] + A
+- G,H,D,E,F,C,A
+
+```
+4. Level Order Traversal
++ Algorithm is : 
+1. Visit every level Left oright
++ level order Traversal : level by level 
+* SOLVE
+```
+FOR IMAGE 7
+
+- A
+- B,C
+- D,E,F
+- G, H
+- A,B,C,D,E,F,G,H
+```
+
+### Binary Search Tree 
++ only unique element 
++ first element is root element 
++ after root , considered as
+  1.  left sub tree
+    + condition for element 
+     > left->data < root->data 
+  2.  right sub tree 
+   +  condition for element : 
+   >  right->data > root->data
+
+* it is a binary tree, which must use following rules: 
+ 1. All the elements in a tree must be distinct
+ 2. First element will be considered as root node
+ 3. if value of node is less than parent node , then it should get space in left sub tree
+ 4. if value of node is greater than parent node, then it should get space in right sub tree
+!['binary-tree'](day4.11.png)
+### Tree Operations
+
+1. empty 
+
+2. addNode
+
+3. deleteNode
+
+4. preOrder();
+
+5. inOrder();
+
+6. postOrder();
+
+7. clear(); 
+
+
+#### Deletion of Node In Binery Search Tree 
+
+!['tree_12'](day4.12.png)
+!['tree_13'](day4.13.png)
+!['tree_14'](day4.14.png)
 
