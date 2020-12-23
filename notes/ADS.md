@@ -1,6 +1,10 @@
 
 # ADS syllabus
 * C++ 03 Standard
+
+# reference 
+> https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm
+> 
 ### Data Structure
 * It is branch of computer science which is  used to organize data efficiently in RAM.
 * Types of data structure
@@ -1496,3 +1500,589 @@ FOR IMAGE 7
 !['tree_13'](day4.13.png)
 !['tree_14'](day4.14.png)
 
+
+## Tree
+
+1. Binary tree
+* Node and Binary search tree class
+```cpp
+#include<iostream>
+#include<string>
+using namespace std;
+namespace collection
+{
+	class BSTree;	//Forward declaration
+	class Node
+	{
+	private:
+		Node *left;
+		int data;
+		Node *right;
+	public:
+		Node( int data  = 0 ) : left( NULL ) ,data( data ), right( NULL )
+		{	}
+		friend class BSTree;
+	};
+	class BSTree
+	{
+	private:
+		Node *root;
+	public:
+		BSTree( void ) throw( ) : root( NULL )
+		{	}
+		bool empty( void )const throw( )
+		{
+			return this->root == NULL;
+		}
+	void clear( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			this->clear( trav->left );
+			this->clear( trav->right );
+			delete trav;
+		}
+    	~BSTree( void )
+		{
+			this->clear( this->root );
+			this->root = NULL;
+		}
+
+ ```
+
+* addNode function 
+ ```cpp   
+		void addNode( int data )
+		{
+			Node *newNode = new Node( data );
+			if( this->empty( ) )
+				this->root = newNode;
+			else
+			{
+				Node *trav = this->root;
+				while( true )
+				{
+					if( data < trav->data )
+					{
+						if( trav->left == NULL )
+						{
+							trav->left = newNode;
+							break;
+						}
+						trav = trav->left;
+					}
+					else
+					{
+						if( trav->right == NULL )
+						{
+							trav->right = newNode;
+							break;
+						}
+						trav = trav->right;
+					}
+				}
+			}
+		}
+```
+* Pre Order, Post Order and InOrder Recursive Traversal
+```cpp
+		void preOrder( void)
+		{
+			this->preOrder( this->root );
+		}
+		void inOrder( void)
+		{
+			this->inOrder( this->root );
+		}
+		void postOrder( void )
+		{
+			this->postOrder(this->root );
+		}
+	
+	private:
+		void preOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			cout<<trav->data<<"	";
+			this->preOrder( trav->left );
+			this->preOrder( trav->right );
+		}
+		void inOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			this->inOrder(trav->left);
+			cout<<trav->data<<"	";
+			this->inOrder(trav->right);
+		}
+		void postOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			this->postOrder( trav->left );
+			this->postOrder( trav->right );
+			cout<<trav->data<<"	";
+		}
+
+```
+
+2. Deletion of Node In Binery Search Tree
+* searchNode function
+```cpp
+    Node* searchNode(int data,Node *&parent)
+    {
+        Node * trav = this->root;
+        parent = NULL; 
+        while(trav != NULL)
+        {
+            if(data == trav->data)
+            return trav; 
+           parent = trav; 
+            if(data < trav->data)
+            trav = trav->left; 
+            else
+            {
+                trav->right; 
+            }
+            
+        }
+
+        parent = NULL;
+        return NULL; 
+    }
+```
+* deleteNode function
+```cpp
+    void deleteNode(int data) throw(Exception)
+    {
+        Node *parent; 
+       Node* target =  this->searchNode(data, parent) ;
+        
+      if(target->left != NULL && target->right != NULL  )
+      {
+          parent = target; 
+          Node * successor = target->right;
+
+          while(successor->left != NULL)
+          {
+              parent = successor; 
+              successor = successor->left;
+               
+          }
+          target->data = successor->data;
+          target = successor;  
+
+
+        
+      }
+
+
+
+        if(target != NULL)
+        {
+            if(target->left == NULL)
+            {
+                if(target == this->root)
+                { 
+                    this->root = target->right; 
+
+                } else if(target == parent->left)
+                {
+                    parent->left = target->right; 
+
+
+                } else
+                {
+                    parent->right = target->right; 
+                }
+                
+            } else
+            {
+                if(target == this->root)
+                { 
+                   this->root = target->left; 
+
+                } else if(target == parent->left)
+                {
+                  parent->left = target->left; 
+
+
+                } else
+                {
+                    parent->right = target->left; 
+                }
+
+            }
+            
+
+        }
+      delete target; 
+    }
+    
+```
+
+# day5 
+
+![day5.1](day5.1.png)
+![day5.2](day5.2.png)
+![day5.3](day5.3.png)
+![day5.4](day5.4.png)
+![day5.5](day5.5.png)
+![day5.6](day5.6.png)
+![day5.7](day5.7.png)
+![day5.8](day5.8.png)
+![day5.9](day5.9.png)
+![day5.10](day5.10.png)
+
+
+
+1. Non Recursive PreOrder Traversal 
+2. Non Recursive InOrder Traversal 
+3. Non Recursive PostOrder Traversal 
+
+### 4.  AVL Tree 
+1. AVL tree is a self-balancing Binary Search Tree (BST) where the difference between heights of left and right subtrees cannot be more than one for all nodes.
+2. here Balanced factor(bf) for problems
++ 1. incase of LL, and LR , bf are positive
++ 2. incase of RR and RL, bf are negitive 
+
+
+## demo 
+
+1. NOn Recursive Order Traversal
+* Non  recersive preorder
+```cpp
+
+
+		void nonRecursivePreorder( void )
+		{
+			stack<Node*> stk;
+			stk.push( this->root );
+			while( !stk.empty( ) )
+			{
+				Node *trav = stk.top();	stk.pop( );
+				if( trav != NULL )
+					cout<<trav->data<<"	";
+				if( trav->right != NULL )
+					stk.push(trav->right );
+				if( trav->left != NULL )
+					stk.push( trav->left );
+			}
+			cout<<endl;
+		}
+ ```
+* Non Recursive InOrder
+ ```cpp   
+		void nonRecursiveInorder( void )
+		{
+			stack<Node*> stk;
+			Node *trav = this->root;
+			while( trav != NULL || !stk.empty( ) )
+			{
+				while( trav != NULL )
+				{
+					stk.push( trav );
+					trav = trav->left;
+				}
+				trav = stk.top();	stk.pop();
+				if( trav != NULL )
+					cout<<trav->data<<"	";
+				trav = trav->right;
+			}
+			cout<<endl;
+		}
+ ```
+
+* non R Post Order 
+```cpp    
+		void nonRecursivePostOrder( void )
+		{
+			stack<Node*> stk;
+			Node *trav = this->root;
+			do
+			{
+				while( trav != NULL )
+				{
+					if( trav->right != NULL )
+						stk.push(trav->right);
+					stk.push(trav);
+					trav = trav->left;
+				}
+				trav = stk.top(); stk.pop();
+				if( trav != NULL && !stk.empty( ) && trav->right == stk.top( ) )
+				{
+					stk.pop( );
+					stk.push( trav );
+					trav = trav->right;
+				}
+				else
+				{
+					cout<<trav->data<<"	";
+					trav = NULL;
+				}
+			}while( !stk.empty( ) );
+			cout<<endl;
+		}
+		
+```
+
+
+2. Recursive Order 
+
+```cpp   
+		void preOrder( void)
+		{
+			this->preOrder( this->root );
+			cout<<endl;
+		}
+		void inOrder( void)
+		{
+			this->inOrder( this->root );
+			cout<<endl;
+		}
+		void postOrder( void )
+		{
+			this->postOrder(this->root );
+			cout<<endl;
+		}
+  private: 
+  	void preOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			cout<<trav->data<<"	";
+			this->preOrder( trav->left );
+			this->preOrder( trav->right );
+		}
+		void inOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			this->inOrder(trav->left);
+			cout<<trav->data<<"	";
+			this->inOrder(trav->right);
+		}
+		void postOrder( Node *trav )
+		{
+			if( trav == NULL )
+				return;
+			this->postOrder( trav->left );
+			this->postOrder( trav->right );
+			cout<<trav->data<<"	";
+		}
+
+  ```
+
+3. AVL Tree
+* Add Node
+```cpp
+		void addNode( int data )
+		{
+			Node *newNode = new Node( data );
+			if( this->empty( ) )
+				this->root = newNode;
+			else
+			{
+				Node *trav = this->root;
+				while( true )
+				{
+					if( data < trav->data )
+					{
+						if( trav->left == NULL )
+						{
+							trav->left = newNode;
+							break;
+						}
+						trav = trav->left;
+					}
+					else
+					{
+						if( trav->right == NULL )
+						{
+							trav->right = newNode;
+							break;
+						}
+						trav = trav->right;
+					}
+				}
+			}
+			balance(this->root, NULL);
+		}
+```
+* Search Node
+```cpp    
+		Node* search( int data, Node *&parent )throw( )
+		{
+			Node *trav = this->root;
+			parent = NULL;
+			while( trav != NULL )
+			{
+				if( data == trav->data )
+					return trav;
+				parent = trav;
+				if( data < trav->data )
+					trav = trav->left;
+				else
+					trav = trav->right;
+			}
+			parent = NULL;
+			return NULL;
+		}
+```
+* delete node
+```cpp    
+		void deleteNode( int data )throw( Exception )
+		{
+			Node *parent;
+			Node *target = this->search( data, parent );
+			if( target != NULL )
+			{
+				if( target->left != NULL && target->right != NULL )
+				{
+					parent = target;
+					Node *successor = target->right;
+					while( successor->left != NULL )
+					{
+						parent = successor;
+						successor = successor->left;
+					}
+					target->data = successor->data;
+					target = successor;
+				}
+				if( target->left == NULL )
+				{
+					if( target == this->root )
+						this->root = target->right;
+					else if( target == parent->left )
+						parent->left = target->right;
+					else
+						parent->right = target->right;
+				}
+				else
+				{
+					if( target == this->root )
+						this->root = target->left;
+					else if( target == parent->left )
+						parent->left = target->left;
+					else
+						parent->right = target->left;
+				}
+				delete target;
+			}
+			else
+				throw Exception("Node not found");
+		}
+```
+* level order
+```cpp
+
+		void levelOrder( void )
+		{
+			queue<Node*> que;
+			que.push( this->root );
+			while( !que.empty( ) )
+			{
+				Node *trav = que.front();	que.pop();
+				if( trav != NULL )
+					cout<<trav->data<<"	";
+				if( trav->left != NULL )
+					que.push(trav->left);
+				if( trav->right != NULL )
+					que.push(trav->right );
+			}
+			cout<<endl;
+		}
+ ```
+
+ 
+
+* calculate height of tree
+  ```cpp  
+		int height( void )
+		{
+			return BSTree::height( this->root );
+		}
+	private:
+		static int height( Node *trav )
+		{
+			if( trav == NULL )
+				return -1;
+			int leftHeight = height( trav->left );
+			int rightHeight = height( trav->right );
+			if( leftHeight > rightHeight )
+				return leftHeight + 1;
+			return rightHeight + 1;
+		}
+  ```
+
+  * balancing AVL tree , 4 condition LL,RR,LR,RL
+  ```cpp 
+	private:
+		
+		static int balanceFactor( Node *node )
+		{
+			return BSTree::height( node->left ) - BSTree::height( node->right );
+		}
+		Node* llCase( Node *node, Node *parent )
+		{
+			Node *leftSubTree = node->left;
+			node->left = leftSubTree->right;
+			leftSubTree->right = node;
+			if( node == this->root )
+				this->root = leftSubTree;
+			else if( node == parent->left)
+				parent->left  = leftSubTree;
+			else
+				parent->right = leftSubTree;
+			return leftSubTree;
+		}
+		Node* rrCase( Node *node, Node *parent)
+		{
+			Node *rightSubTree = node->right;
+			node->right = rightSubTree->left;
+			rightSubTree->left = node;
+			if( node == this->root )
+				this->root = rightSubTree;
+			else if( node == parent->left)
+				parent->left  = rightSubTree;
+			else
+				parent->right = rightSubTree;
+			return rightSubTree;
+		}
+		Node* lrCase( Node *node, Node *parent )
+		{
+			node->left = rrCase(node->left, node);
+			node = llCase(node, parent);
+			return node;
+		}
+		Node* rlCase( Node *node, Node *parent )
+		{
+			node->right = llCase(node->right, node);
+			node = rrCase(node, parent);
+			return  node;
+		}
+		void balance( Node *node, Node *parent )
+		{
+			if( node == NULL )
+				return;
+			balance(node->left, node);
+			balance(node->right, node);
+
+			int balanceFactor =  BSTree::balanceFactor(node);
+			if( balanceFactor > 1 )	//Consider Left SubTree
+			{
+				if( BSTree::balanceFactor(node->left ) > 0 )
+					llCase( node, parent );
+				else
+					lrCase( node, parent );
+			}
+			else if( balanceFactor < -1 )	//Consider RightSubTree
+			{
+				if( BSTree::balanceFactor(node->right ) > 0 )
+					rlCase( node, parent );
+				else
+					rrCase( node, parent );
+			}
+		}
+```

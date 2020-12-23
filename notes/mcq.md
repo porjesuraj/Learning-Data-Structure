@@ -241,3 +241,5 @@ int main ()
     return 0;
 }
 ```
+
+14. DS intrview, write non recersice preorder,postorder,inorder 
