@@ -5,6 +5,9 @@
  1.  find duplicate element of array
  2. find maximum element of array
 
+3. which sort doesnt use divide and conquer
++ linear doesnt use Divide and Conquer,
++ rest uses -->binary,quick,merge
 ## Interview Question 
 3. How to traverse Linked List in outside of class or non member function ?
 * create iterator class
@@ -243,3 +246,5 @@ int main ()
 ```
 
 14. DS intrview, write non recersice preorder,postorder,inorder 
+
+
