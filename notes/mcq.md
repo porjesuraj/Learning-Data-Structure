@@ -8,6 +8,28 @@
 3. which sort doesnt use divide and conquer
 + linear doesnt use Divide and Conquer,
 + rest uses -->binary,quick,merge
+
+
+4. Graph , and question on it 
++ or discrition of graph, and based on it, we need to find , terminalogies of node 
++ may not mentaion directed or  undirected, here ,
++ if for E {(),... } used then  undirected , 
++ if for E {< >,...} used directed
+
+5.  Complete graph
+* Each vertex of a graph is adjacent to every other vertex.
+* Un-directed graph: Number of edges = n (n-1) / 2 
+* Directed graph: Number of edges = n (n-1)
+
+6. DAG (Directed acyclic graph ) used for task scheduling in OS or big data system 
+
+7. What is true about spanning tree, or false about spanning tree?
+
+8.  For un-directed graph, adjacency matrix is
+always symmetric across the diagonal.
+
+9. 
+
 ## Interview Question 
 3. How to traverse Linked List in outside of class or non member function ?
 * create iterator class
