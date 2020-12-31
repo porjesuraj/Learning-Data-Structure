@@ -286,12 +286,12 @@ int main( void )
 	tree.addNode( 115 );
 
 	//tree.preOrder( );	//150	80	50	30	135	120	100	115	125	145	180	175	200
-	//tree.nonRecursivePreorder( );
+	tree.nonRecursivePreorder( );
 
-	//tree.inOrder( );	//30	50	80	100	115	120	125	135	145	150	175	180	200
+	tree.inOrder( );	//30	50	80	100	115	120	125	135	145	150	175	180	200
 	//tree.nonRecursiveInorder( );
 
-	//tree.postOrder( );	//30	50	115	100	125	120	145	135	80	175	200	180	150
+	tree.postOrder( );	//30	50	115	100	125	120	145	135	80	175	200	180	150
 	//tree.nonRecursivePostOrder( );
 
 	tree.levelOrder( );

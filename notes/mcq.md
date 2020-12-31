@@ -28,7 +28,16 @@
 8.  For un-directed graph, adjacency matrix is
 always symmetric across the diagonal.
 
-9. 
+9. give a pointer to a node in a doubly linked list what is time complexity in deleting that node
+* n order to delete a node and connect the previous and the next node together, you need to know their pointers. In a doubly-linked list, both pointers are available in the node that is to be deleted. The time complexity is constant in this case, i.e., O(1).
+* Whereas in a singly-linked list, the pointer to the previous node is unknown and can be found only by traversing the list from head until it reaches the node that has a next node pointer to the node that is to be deleted. The time complexity in this case is O(n).
+* In cases where the node to be deleted is known only by value, the list has to be searched and the time complexity becomes O(n) in both singly- and doubly-linked lists.
+
+10. to merge two doubly circular linked list, what is the time complexity
+* 
+
+1.  Given a doubly linked list,  function to sort the doubly linked list in increasing order using merge sort. time complexity 
+* 
 
 ## Interview Question 
 3. How to traverse Linked List in outside of class or non member function ?

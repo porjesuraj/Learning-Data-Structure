@@ -4,7 +4,7 @@
 
 # reference 
 > https://www.tutorialspoint.com/data_structures_algorithms/avl_tree_algorithm.htm
-> 
+ 
 ### Data Structure
 * It is branch of computer science which is  used to organize data efficiently in RAM.
 * Types of data structure
@@ -78,8 +78,8 @@
  1. we cannot resize array.
  2. it requires continuous memory . 
  3. Compiler do not check array bounds 
- 4. element isnertioon and deletion takes more time in a array
- 5. using assignment operator, we cannot copy one array into another arra
+ 4. element inertion and deletion takes more time in a array
+ 5. using assignment operator, we cannot copy one array into another array
  +  need memcpy() in c++ or loop to copy one array to another    
  + to overcome, Array, we can use Linked list 
 
@@ -123,7 +123,7 @@ Node* next;
    2. a pointer which is address of next node object 
    + is callled singly LL 
  2. Doubly Linked List(DLL)
- + in a linked listm if node contains three parts
+ + in a linked list if node contains three parts
   1. a pointer which contains address of previous node object(prev)
   2. a element(data)
   3. a pointer which contains address of next node object(next)
@@ -140,8 +140,8 @@ Node* next;
    2. Tail
    + In a LL, tail is a pointer which is designed to store address of last node object    
 * 4. Singly and DOubly LL are further classified into two types: 
-  1. Linear LL 
-  2. Circular LL 
+     1. Linear LL 
+     2. Circular LL 
 !['L-SLL_1.1'](day1.1.png)
 !['L-SLL_1.2'](day1.2.png)
 * 5. Linear Singly Linked List ( L-SLL)
@@ -207,7 +207,7 @@ bool empty(void) const throw()
 }
 ```
 2. void addFirst(int data) throw(bad_alloc)
-!['day2'](day1day1.7.png)
+!['day2'](day1.7.png)
 ```cpp
 void addFirst(int data) throw(bad_alloc)
 {
@@ -404,7 +404,8 @@ int nodeCount() const throw()
 * as we didnt write destuctor so showing memory leakge 
 * after destructor , valgrind shows 
 >  All heap blocks were freed -- no leaks are possible
- >valgrind ./filename.out 
+* command
+>valgrind ./filename.out 
  ```cpp
 ~LinkedList(void)
 {
@@ -447,9 +448,149 @@ intList.pop_back();
 ## 6. iterate list in non member function 
 * create iterator class itrStart and itrEnd  
 !['day2'](Iterator.png)
+create iterator class
+!['iterator'](Iterator.png)
 ```cpp
+#include<iostream>
+#include<string>
+using namespace std;
+
+namespace collection
+{
+	class Exception
+	{
+	private:
+		string message;
+	public:
+		Exception( string message = " " ) throw( ) : message( message )
+		{	}
+		string getMessage( void )const throw( )
+		{
+			return this->message;
+		}
+	};
+	class Iterator;		//Forward declration
+	class LinkedList;	//Forward declration
+	class Node
+	{
+	private:
+		int data;
+		Node *next;
+	public:
+		Node( int data = 0 ) throw( ) : data( data ), next( NULL )
+		{	}
+		friend class Iterator;
+		friend class LinkedList;
+	};
+	
+   class Iterator{
+   
+   private: 
+    Node *trav; 
+
+  	public: 
+	  Iterator(Node *trav)
+	  { 
+		  this->trav = trav; 
+          
+	  }   
+
+	  bool operator!=(Iterator &other)
+	  {
+		return  this->trav != other.trav; 
+	  }
+
+	  void operator++(void)
+	  {
+		  this->trav = this->trav->next; 
+	  }
+
+	  int operator*(void)
+	  {
+		  return this->trav->data; 
+	  }
+
+   };
+
+	class LinkedList
+	{
+	private:
+		Node *head;
+		Node *tail;
+	public:
+		LinkedList( void )throw( ) : head( NULL ), tail( NULL )
+		{	}
+		bool empty( void )const throw( )
+		{
+			return this->head == NULL;
+		}
+		void addLast( int data )throw( bad_alloc )
+		{
+			Node *newNode  = new Node( data );
+			if( this->empty( ) )
+				this->head = newNode;
+			else
+				this->tail->next = newNode;
+			this->tail = newNode;
+		}
+		void removeFirst( void )throw( Exception )
+		{
+			if( this->empty( ) )
+				throw Exception( "LinkedList is empty" );
+			else if( this->head == this->tail )
+			{
+				delete this->head;
+				this->head = this->tail = NULL;
+			}
+			else
+			{
+				Node *ptrNode = this->head;
+				//this->head = ptrNode->next;	//or
+				this->head = this->head->next;
+				delete ptrNode;
+			}
+		}
+
+		Iterator begin(void)
+		{
+            Iterator itr(this->head);
+
+			return itr;  
+		}
+		Iterator end(void)
+		{
+			Iterator itr(NULL);
+
+           return itr; 
+		}
+		
+	};
+}
+int main( void )
+{
+    // iterate list in non member function 
+  using namespace collection; 
+  LinkedList list; 
+  list.addLast(10); 
+  list.addLast(20);
+  list.addLast(30);  
+    
+ Iterator itrStart	= list.begin();
+	Iterator itrEnd = list.end();
+
+	while(itrStart != itrEnd) // itrStart.operator!= (itrEnd) 
+	{
+        cout<< ( *itrStart ) <<endl; // itrStart.operator*() 
+		++ itrStart; //itrStart.operator++()
+	} 
+
+	cout<<endl; 
+	return 0;
+}
 
 ```
+
+
 ## Reverse Linked List
 * using recursion 
 * using 3  pointers
@@ -648,7 +789,7 @@ public:
  
 ## 4. we can perform following Operations on Singly Linked List
 * 3 condition to consider 
-+ 1. list list is empty i.e no node
++ 1. list is empty i.e no node
 + 2. list has one node 
 + 3. list has more than one node 
 
@@ -935,15 +1076,15 @@ int main ()
 3. Stack DS  
 !['day3-S-A'](Image_3.1.png)
 *  1.  top is index varaible  for a stack
-+ its value by default by -1 
+   + its value by default by -1 
 *  2. to insert element , 
-+ need to increment top 
+   + need to increment top 
 *  3.  so stack will be empty when 
-+ top = -1
+   + top = -1
 *  4. stack will be full 
-+  when top = SIZE - 1
+   +  when top = SIZE - 1
 + where Size = size of stack (from 0 to size -1)
-*  5. 
+
 
 4. we can perform following operation on Stack
 + 1. empty
@@ -970,6 +1111,77 @@ int main ()
   * Syntax : 
   > void pop (void) throw(Exception)
 
+* dynamic stack
+```cpp
+  class Stack
+    {
+
+        private : 
+        int top;
+        int size; 
+        int *arr; 
+
+      public: 
+
+      Stack (void) throw(bad_alloc) :top(-1),size(5)
+      { 
+          this->arr = new int [this->size]; 
+      }
+
+ Stack (int size) throw(bad_alloc) :top(-1),size(size)
+      { 
+          this->arr = new int [this->size]; 
+      }
+
+      bool empty(void) const throw()
+      {
+          return this->top == -1; 
+      }
+        
+        bool full (void) const throw()
+        {
+            return this->top == this->size - 1; 
+        }
+
+      void push(int element)throw(Exception)
+      {
+          if(this->full()) 
+          throw Exception("Stack is full"); 
+
+          this->arr[++this->top]  = element; 
+      }
+
+      int peek(void) const throw(Exception)
+      {
+          if(this->empty())
+           throw Exception("Stack empty");
+          
+          return this->arr[this->top]; 
+      }
+
+      void pop(void)  throw(Exception)
+      {
+           if(this->empty())
+           throw Exception("Stack empty");
+          else
+          --this->top;
+        
+      }
+      ~Stack(void)
+      {
+         if(this->arr != NULL)
+         {
+             delete[] this->arr; 
+             
+             this->arr = NULL; 
+         }
+      }
+ 
+   };
+
+
+
+```
 
 5. Application of stack 
 * programatic example
@@ -988,7 +1200,7 @@ int main ()
 10. Recent files function 
 
 ## . Expression
-1. A statement which contians variable .constant and operator is called Expression
+1. A statement which contians variable ,constant and operator is called Expression
 2. Forms of Expression 
 + 1. Infix E
    * operator in between operand
@@ -1007,6 +1219,7 @@ int main ()
 * INFIX TO PREFIX 
 !['day3'](Image_3.3.png)
  1. INFIX TO PREFIX 
+ ```
  *  to convert  Infix to prefix: a + b * c - d / e
  - 1.  consider precidence of operator BODMAS|(bracket of Div mult add sub) 
  - so expression 
@@ -1014,7 +1227,7 @@ int main ()
   + a + *bc - /de
   +    +a*bc -/de
   +    -+a*bc/de
-
+```
  *  Infix to prefix
 + COnsider  infix Expression: "5 + 3 * 9 / (7 -4) - 6 * 2"
 +   prefix :  -+5/*39-74*62
@@ -1043,7 +1256,7 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 
 
 # 3.  Queue 
-!['day3']()
+
 !['day3'](day3_Queue.png)
 
 1. A Queue is linear/sequntial data structure in which we can manage element in First In First Out (FIFO) order.
@@ -1065,7 +1278,7 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 4. Deque
 
 ## Linear Queue 
-* we can iimplement linear queue using array as well as LinkedList. 
+* we can implement linear queue using array as well as LinkedList. 
 
 * 1.  Linked List implementation using (Linear Singly Linked list)
 + 1. addlast()
@@ -1078,8 +1291,8 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 + syntax: bool empty(void) const throw(); 
 
 2. full
-+ if value of read is "Array size - 1  " then linear queue is considered as full
-+ snytax: bool full(void)
++ if value of rear is "Array size - 1  " then linear queue is considered as full
++ syntax: bool full(void)
 3. enqueue 
 + use to insert element in queue
 + increment rear and insert value
@@ -1091,14 +1304,137 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 + used to get value from front end . 
 + Syntax  : int peek(void) const throw(Exception)
 
+```cpp
+ class Queue
+    {
+
+       int rear;
+		int front;
+		int size;
+		int *arr;
+	public:
+		Queue( void ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( 5 )
+		{
+			this->arr = new int[ this->size ];
+		}
+		Queue( int size ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( size )
+		{
+			this->arr = new int[ this->size ];
+		}
+		bool empty( void )const throw( )
+		{
+			return this->rear == -1 || this->front > this->rear;
+		}
+		bool full( void )const throw( )
+		{
+			return this->rear == size - 1;
+		}
+
+        void enqueue(int element) throw(Exception)
+        {
+            if(this-> full())
+            throw Exception("QUeue is full"); 
+            if(this->rear == -1)
+            this->front = 0;
+            this->rear = this->rear + 1; 
+            this->arr[this->rear] = element;  
+        }
+
+        int peek() const throw(Exception)
+        {
+            if(this->empty()) 
+             throw Exception("Queue is empty") ;
+            return this->arr[this->front]; 
+        }
+ 
+         void dequeue()
+         {
+            if(this->empty()) 
+             throw Exception("Queue is empty") ;
+
+             this->front = this->front + 1; 
+
+         }
+        ~Queue(void)
+        {
+            if(this->arr != NULL)
+            {
+                delete[] this->arr;
+                this->arr = NULL; 
+            }
+        }
+ 
+   };
+
+
+```
+* dynamic queue 
+```cpp
+	class Queue
+	{
+	private:
+		int rear;
+		int front;
+		int size;
+		int **arr;
+	public:
+		Queue( void ) throw( bad_alloc ) : rear( -1 ), front( -1 ), size( 5 )
+		{
+			this->arr = new int*[ size ];
+		}
+		Queue( int size ) throw( bad_alloc ) : rear( -1 ), front( -1 ), size( 5 )
+		{
+			this->arr = new int*[ size ];
+		}
+		bool empty( void )const throw( )
+		{
+			return this->rear == -1 || this->front > this->rear;
+		}
+		bool full( void )const throw( )
+		{
+			return this->rear == this->size - 1 ;
+		}
+		void enqueue( int element )
+		{
+			if( this->full( ) )
+				throw Exception("Queue is full");
+			if( this->rear == -1 )
+				this->front = 0;
+			this->rear = this->rear + 1;
+			this->arr[ this->rear ] = new int( element );
+		}
+		int peek( void )const throw( Exception )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			return *this->arr[ this->front ];
+		}
+		void dequeue( void )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			delete this->arr[ this->front ];
+			this->arr[ this->front ] = NULL;
+			this->front = this->front + 1;
+		}
+		~Queue( void )
+		{
+			while( ! this->empty())
+				this->dequeue();
+			delete[] this->arr;
+			this->arr = NULL;
+		}
+	};
+```
+
 ### Limitation 
 * after deletion of elements from queue, even though it is empty, we cannot use that space. so to overcome this   
 ## Circular Queue
 1. if we want to overcome limitation of linear queue then we should use C-Queue 
 
-* we can iimplement linear queue using array as well as LinkedList. 
+* we can implement linear queue using array as well as LinkedList. 
 
-* 1.  Linked List implementation using (Circular Singly Linked list)
+1.  Linked List implementation using (Circular Singly Linked list)
 + 1. addlast()
 + 2. removeFirst()
 
@@ -1124,8 +1460,150 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 + used to get value from front end . 
 + Syntax  : int peek(void) const throw(Exception)
 
+```cpp
+	class Queue
+	{
+	private:
+		int rear;
+		int front;
+		int size;
+		int *arr;
+	public:
+		Queue( void ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( 5 )
+		{
+			this->arr = new int[ this->size ];
+		}
+		Queue( int size ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( size )
+		{
+			this->arr = new int[ this->size ];
+		}
+		bool empty( void )const throw( )
+		{
+			return this->rear == -1;
+		}
+		bool full( void )const throw( )
+		{
+			return ( this->rear + 1 ) % this->size == this->front;
+		}
+		void enqueue( int element )throw( Exception )
+		{
+			if( this->full( ) )
+				throw Exception("Queue is full");
+			if( this->rear == -1 )
+				this->front = 0;
+			this->rear = ( this->rear + 1 ) % this->size;
+			this->arr[ this->rear ] = element;
+		}
+		int peek( void )const throw( Exception )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			return this->arr[ this->front ];
+		}
+		void dequeue( void )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			if( this->rear == this->front )
+				this->rear = -1;
+			else
+				this->front = ( this->front + 1 ) % this->size;
+		}
+		~Queue( void )
+		{
+			if( this->arr != NULL )
+			{
+				delete[] this->arr;
+				this->arr = NULL;
+			}
+		}
+	};
+```
 ## Priority Queue 
 
+```cpp
+class Queue
+    {
+
+       int rear;
+		int front;
+		int size;
+		int *arr;
+	public:
+		Queue( void ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( 5 )
+		{
+			this->arr = new int[ this->size ];
+		}
+		Queue( int size ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( size )
+		{
+			this->arr = new int[ this->size ];
+		}
+		bool empty( void )const throw( )
+		{
+			return this->rear == -1 || this->front > this->rear;
+		}
+		bool full( void )const throw( )
+		{
+			return this->rear == size - 1;
+		}
+
+        void enqueue(int element) throw(Exception)
+        {
+            if(this-> full())
+            throw Exception("QUeue is full"); 
+           if(this->rear == -1)
+           {
+               this->rear = this->front = 0;
+               this->arr[this->rear] = element; 
+           } else
+           {
+               int index = this->rear; 
+               while(element > arr[index])
+               { 
+                   this->arr[(index + 1) % this->size ] = this->arr[index]; 
+                   
+                   index = (index - 1  + this->size) % this->size; 
+
+                   if( (index + 1) % this->size == this->front )
+                   break; 
+
+               }
+               index = (index + 1) % this->size; 
+               this->arr[index] = element; 
+               this->rear = (this->rear + 1) % size; 
+           }
+           
+
+        }
+
+        int peek() const throw(Exception)
+        {
+            if(this->empty()) 
+             throw Exception("Queue is empty") ;
+            return this->arr[this->front]; 
+        }
+ 
+         void dequeue()
+         {
+            if(this->empty()) 
+             throw Exception("Queue is empty") ;
+
+             this->front = this->front + 1; 
+
+         }
+        ~Queue(void)
+        {
+            if(this->arr != NULL)
+            {
+                delete[] this->arr;
+                this->arr = NULL; 
+            }
+        }
+ 
+   };
+
+
+```
 
 ## Deque(Double ended Queue)
 1. to implement using array
@@ -1143,6 +1621,106 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 + 6.  peekBack() :
 >  use rear
 
+```cpp
+	class Queue
+	{
+	private:
+		int rear;
+		int front;
+		int size;
+		int *arr;
+	public:
+		Queue( void ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( 5 )
+		{
+			this->arr = new int[ this->size ];
+		}
+		Queue( int size ) throw( bad_alloc ) : rear( -1 ), front( -1 ) , size( size )
+		{
+			this->arr = new int[ this->size ];
+		}
+		bool empty( void )const throw( )
+		{
+			return this->rear == -1;
+		}
+		bool full( void )const throw( )
+		{
+			return ( this->rear + 1 ) % this->size == this->front;
+		}
+		void enqueueFront( int element )throw( Exception )
+		{
+			if( this->full( ) )
+				throw Exception("Queue is full");
+			if( this->rear == -1 )
+			{
+				 this->rear = this->front = 0;
+			}else
+			{
+				this->rear = ( this->rear + 1 ) % this->size;		
+			}		
+			 this->arr[this->rear] = element; 
+		}
+    
+
+	   void enqueueBack( int element )throw( Exception )
+		{
+			if( this->full( ) )
+				throw Exception("Queue is full");
+			if( this->rear == -1 )
+			{
+				 this->rear = this->front = 0;
+			}else
+			{
+				this->front = ( this->front - 1 + this->size ) % this->size;		
+			}		
+			 this->arr[this->front] = element; 
+		}
+	
+	
+		int peekFront( void )const throw( Exception )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			return this->arr[ this->front ];
+		}
+        
+
+
+
+		int peekBack( void )const throw( Exception )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			return this->arr[ this->rear ];
+		}
+			void dequeueFront( void )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			if( this->rear == this->front )
+				this->rear = -1;
+			else
+				this->rear = ( this->rear - 1 + this->size ) % this->size;
+		}
+		void dequeueBack( void )
+		{
+			if( this->empty( ) )
+				throw Exception("Queue is empty");
+			if( this->rear == this->front )
+				this->rear = -1;
+			else
+				this->front = ( this->front + 1 ) % this->size;
+		}
+		~Queue( void )
+		{
+			if( this->arr != NULL )
+			{
+				delete[] this->arr;
+				this->arr = NULL;
+			}
+		}
+	};
+```
+
 
 # day4
 
@@ -1150,7 +1728,7 @@ post fix =>   5 + 3 * 9 / 74- - 6 * 2
 ## Tree 
 1. Tree is non sequential , non linear data structure which is collection of nodes
 2. Tree contains: 
-   1. A special node is caleed root
+   1. A special node it is called root
    2. zero or more sub trees 
 3. A tree data structure can be defined recursively as a collection of nodes (starting at a root node),
 +  where each node is a data structure consisting of a value, together with a list of references to nodes (the "children"), with the constraints that no reference is duplicated, and none points to the root.
@@ -1226,7 +1804,7 @@ N,O           | 4
 
 ```
 10. Depth 
- + maximum level of anynode in a tree is called as depth of a tree
+ + maximum level of any node in a tree is called as depth of a tree
  + Maximum depth of a tree mentioned in diagram is 4 . 
   
 11. Internal Node/branch node 
@@ -1337,7 +1915,7 @@ N,O             | M,H,D,A
  1. Left Skewed Binary Tree 
  + In a binary tree, if, right sub tree of each node is empty then it is Left Skewed binary tree
  2.  Right Skewed Binary Tree 
- + In a binary tree, if, left sub tree of each node is empty then it is Left Skewed binary tree
+ + In a binary tree, if, left sub tree of each node is empty then it is Right Skewed binary tree
 
  !['s-b-t'](day4.5.png)
 
@@ -1447,7 +2025,7 @@ LRV
 ```
 4. Level Order Traversal
 + Algorithm is : 
-1. Visit every level Left oright
+1. Visit every level Left to right
 + level order Traversal : level by level 
 * SOLVE
 ```
@@ -1742,7 +2320,7 @@ namespace collection
 3. Non Recursive PostOrder Traversal 
 
 ### 4.  AVL Tree 
-1. AVL tree is a self-balancing Binary Search Tree (BST) where the difference between heights of left and right subtrees cannot be more than one for all nodes.
+1. AVL tree is a self-balancing Binary Search Tree (BST) where the difference between heights of left and right subtrees cannot be more than 1 for all nodes.
 2. here Balanced factor(bf) for problems
 + 1. incase of LL, and LR , bf are positive
 + 2. incase of RR and RL, bf are negitive 
@@ -2339,7 +2917,7 @@ for (int count = 1; count <= 200; ++ count)
 7, 10, 15, 9, 8, 12, 21
 
 * Pass - II( no of comparisions are 5)
-7, 10, 15, 9, 8, 12
+7, 10, 15, 9, 8, 12 
 7, 10, 15, 9, 8, 12
 7, 10, 9, 15, 8, 12
 7, 10, 9, 8, 15, 12
@@ -2511,7 +3089,40 @@ void selection_sort(int *arr)
 + divide and conquer technique
 * consider 
 - 10,7,15,21,9,8,12
+```cpp
+void merge( int *arr, int left, int mid, int right )
+{
+	int i = left, j = mid + 1, k = 0;
+	int size = right - left + 1;
+	int *temp = new int[ size ];
+	while( i <= mid && j <= right )
+	{
+		if( arr[ i ] < arr[ j ] )
+			temp[ k ++ ] = arr[ i ++ ];
+		else
+			temp[ k ++ ] = arr[ j ++ ];
+	}
+	while( i <= mid )
+		temp[ k ++ ] = arr[ i ++ ];
+	while( j <= right )
+		temp[ k ++ ] = arr[ j ++ ];
 
+	for( i = left, k = 0; i <= right; ++ i, ++ k  )
+		arr[ i ] = temp[ k ];
+
+	delete[] temp;
+}
+void merge_sort( int *arr, int left, int right )
+{
+	if( left < right )
+	{
+		int mid = ( left + right ) / 2;
+		merge_sort(arr, left, mid);
+		merge_sort(arr, mid + 1, right);
+		merge( arr, left, mid, right );
+	}
+}
+```
 7. Quick Sort
 * Algorithm: 
  1. pick an element called a pivot , from the array
@@ -2530,7 +3141,31 @@ void selection_sort(int *arr)
 - 3,1,8,5,2,7,9,5,4
 - 3,1,2,5,8,7,9,5,4
 - 2,1,3,5,8,7,9,5,4
-- 
+
+```cpp
+void quick_sort( int *arr, int left, int right )
+{
+	if( left > right )
+		return;
+	int pivot = arr[ left ];
+	int i = left;
+	int j = right;
+	while( i <= j )
+	{
+		while( arr[ i ] <= pivot  )
+			++i;
+		while( arr[ j ] > pivot )
+			-- j;
+		if( i < j )
+			swap( arr[ i ], arr[ j ] );
+	}
+	swap( arr[ left ], arr[ j ] );
+	quick_sort(arr, left, j - 1 );
+	quick_sort(arr, j + 1, right );
+}
+
+```
+
 * references
 ```
 1. Tim Sort 
